@@ -30,11 +30,14 @@ std::vector<double> BinGenotype::getFenotype(Chromosome chromosome) const {
     for (std::size_t i = 0; i < variables.size(); ++i) {
         const auto &var = variables[i];
         double pow2 = 1, tmp = 0;
-        for (std::size_t k = 1; k < variableLength[i]; ++k) {
-            tmp += (chromosome[j + k - 1] ^ chromosome[j + k]) * pow2;
+        bool acc = false;
+        for (std::size_t k = 0; k < variableLength[i] - 1; ++k) {
+            acc ^= chromosome[j + k];
+            tmp += acc * pow2;
             pow2 *= 2;
         }
-        tmp += chromosome[j + variableLength[i] - 1] * pow2;
+        acc ^= chromosome[j + variableLength[i] - 1];
+        tmp += acc * pow2;
         pow2 *= 2;
         fenotype[i]  = var.getMinValue() + tmp * (var.getMaxValue() - var.getMinValue()) / (pow2 - 1);
         j += variableLength[i];
