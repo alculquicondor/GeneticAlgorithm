@@ -46,7 +46,8 @@ public:
             crossProbability(crossProbability), mutationProbability(mutationProbability), elitism(elitism),
             vMin(vMin), vMax(vMax) { }
 
-    std::vector<double> run(OptimizingFunction optimizingFunction, std::vector<VariableDescription> variables);
+    std::vector<double> run(OptimizingFunction optimizingFunction,
+                            Genotype *genotype);
 
     std::vector<double> getMeans() {
         return means;
@@ -61,11 +62,11 @@ public:
 
 template <typename G>
 std::vector<double> GeneticAlgorithm<G>::run(OptimizingFunction optimizingFunction,
-                                          std::vector<VariableDescription> variables) {
+                                             Genotype *genotype) {
     means.clear();
     bests.clear();
     GeneticAlgorithm::optimizingFunction = optimizingFunction;
-    genotype = std::unique_ptr<G>{new Genotype(variables)};
+    this->genotype = std::unique_ptr<G>{genotype};
 
     population = std::vector<Chromosome>(populationSize);
     for (Chromosome &chromosome : population)

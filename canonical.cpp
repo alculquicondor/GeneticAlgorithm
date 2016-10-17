@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 
 #include "GeneticAlgorithm.h"
 #include "Binary/BinOnePointCross.h"
@@ -7,7 +8,13 @@
 #include "Binary/OneBitMutation.h"
 
 
-int main() {
+int main(int argc, char *argv[]) {
+    std::unique_ptr<std::istream> input_ptr;
+    if (argc > 1) {
+        input_ptr = std::unique_ptr<std::istream>{new std::ifstream(argv[1])};
+    } else {
+        input_ptr = std::unique_ptr<std::istream>{&std::cin};
+    }
     OptimizingFunction function = [](const std::vector<double> &x) {
         double squaresSum = x[0] * x[0] + x[1] * x[1];
         return 0.5 - (std::pow(std::sin(std::sqrt(squaresSum)), 2) - 0.5) /
@@ -17,7 +24,9 @@ int main() {
     std::size_t experiments, population, generations, crossOp;
     bool elitism;
     double crossProb, mutProb, vMin, vMax;
-    std::cin >> experiments >> population >> generations >> crossOp >> crossProb >> mutProb >> elitism >> vMin >> vMax;
+    (*input_ptr) >> experiments >> population >> generations
+                 >> crossOp >> crossProb >> mutProb >> elitism
+                 >> vMin >> vMax;
 
     Cross<BinGenotype> *cross;
     if (crossOp == 0)
@@ -34,8 +43,8 @@ int main() {
     GeneticAlgorithm<BinGenotype> ga(population, generations, cross, new OneBitMutation, crossProb, mutProb, elitism,
                                      vMin, vMax);
     for (std::size_t i = 0; i < experiments; ++i) {
-        auto solution = ga.run(function, {{-100, 100, 1e-7},
-                                          {-100, 100, 1e-7}});
+        auto solution = ga.run(function, new BinGenotype(
+                {{-100, 100, 1e-7}, {-100, 100, 1e-7}}));
         double fitness = function(solution);
         if (bestFitness < fitness) {
             bestSolution = solution;
@@ -56,6 +65,6 @@ int main() {
     for (std::size_t g = 0; g <= generations; ++g)
         std::cout << bestCurve[g] << '\t' << offlineCurve[g] << '\t' << onlineCurve[g] << std::endl;
 
-    std::cerr << "x_0 = " << bestSolution[0] << ' ' << "\tx_1 = " << bestSolution[1] << '\t' << bestFitness << std::endl;
+    std::cout << "x_0 = " << bestSolution[0] << ' ' << "\tx_1 = " << bestSolution[1] << '\t' << bestFitness << std::endl;
     return 0;
 }
