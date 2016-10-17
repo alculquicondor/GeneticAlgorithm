@@ -5,9 +5,9 @@
 #ifndef GENETIC_ALGORITHM_ONEBITMUTATION_H
 #define GENETIC_ALGORITHM_ONEBITMUTATION_H
 
-#include "Mutation.h"
+#include "../Mutation.h"
 #include "BinGenotype.h"
-#include "RandomMachine.h"
+#include "../RandomMachine.h"
 
 
 class OneBitMutation : public Mutation<BinGenotype> {

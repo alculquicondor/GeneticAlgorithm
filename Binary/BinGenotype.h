@@ -9,7 +9,7 @@
 #include <random>
 
 #include "BinChromosome.h"
-#include "VariableDescription.h"
+#include "../VariableDescription.h"
 
 
 class BinGenotype {

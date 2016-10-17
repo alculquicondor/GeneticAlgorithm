@@ -1,10 +1,10 @@
 #include <iostream>
 
 #include "GeneticAlgorithm.h"
-#include "BinOnePointCross.h"
-#include "BinTwoPointCross.h"
-#include "BinUniformCross.h"
-#include "OneBitMutation.h"
+#include "Binary/BinOnePointCross.h"
+#include "Binary/BinTwoPointCross.h"
+#include "Binary/BinUniformCross.h"
+#include "Binary/OneBitMutation.h"
 
 
 int main() {

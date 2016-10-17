@@ -6,8 +6,8 @@
 #define GENETIC_ALGORITHM_BINONEPOINTCROSS_H
 
 #include "BinGenotype.h"
-#include "Cross.h"
-#include "RandomMachine.h"
+#include "../Cross.h"
+#include "../RandomMachine.h"
 
 
 class BinOnePointCross : public Cross<BinGenotype> {

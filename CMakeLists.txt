@@ -3,11 +3,18 @@ project(genetic_algorithm)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
 
-set(SOURCE_FILES main.cpp
-        VariableDescription.cpp VariableDescription.h
-        BinGenotype.cpp BinGenotype.h
-        BinChromosome.cpp BinChromosome.h
+set(COMMON_FILES
         GeneticAlgorithm.h Cross.h
-        BinOnePointCross.cpp BinOnePointCross.h
-        RandomMachine.cpp RandomMachine.h Mutation.h OneBitMutation.cpp OneBitMutation.h BinTwoPointCross.cpp BinTwoPointCross.h BinUniformCross.cpp BinUniformCross.h)
-add_executable(genetic_algorithm ${SOURCE_FILES})
+        RandomMachine.cpp RandomMachine.h
+        Mutation.h)
+
+set(CANON_FILES canonical.cpp
+        VariableDescription.cpp VariableDescription.h
+        Binary/BinGenotype.cpp Binary/BinGenotype.h
+        Binary/BinChromosome.cpp Binary/BinChromosome.h
+        Binary/BinOnePointCross.cpp Binary/BinOnePointCross.h
+        Binary/OneBitMutation.cpp Binary/OneBitMutation.h
+        Binary/BinTwoPointCross.cpp Binary/BinTwoPointCross.h
+        Binary/BinUniformCross.cpp Binary/BinUniformCross.h)
+
+add_executable(canonical_ga ${CANON_FILES} ${COMMON_FILES})
